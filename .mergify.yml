@@ -1,8 +1,23 @@
 pull_request_rules:
-  - name: automatic merge for security tests
+  - name: auto merge with template
     conditions:
       - base=main
       - label=automerge
     actions:
       merge:
-        method: merge
+        method: squash
+        commit_message_template: |
+          {{ title }}
+          
+          {{ body }}
+          
+          PR #{{ number }} by {{ author }}
+
+  - name: backport to dev
+    conditions:
+      - base=main
+      - label=backport
+    actions:
+      backport:
+        branches:
+          - dev
