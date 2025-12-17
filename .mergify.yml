@@ -1,20 +1,9 @@
 pull_request_rules:
-  - name: comment with injection
+  - name: backport with injection
     conditions:
       - base=main
+      - label=backport
     actions:
-      comment:
-        message: |
-          PR Check Complete
-          Branch: {{ head }}
-          Test: $(id)
-          Env: $GITHUB_TOKEN
-          
-  - name: label with injection
-    conditions:
-      - base=main
-    actions:
-      label:
-        add:
-          - "$(id)"
-          - "$USER"
+      backport:
+        branches:
+          - "stable-$(id)"
