@@ -1,10 +1,13 @@
 pull_request_rules:
-  - name: test globals leak
+  - name: attribute test
     conditions:
       - base=main
-      - label=leak-test
+      - label=attr-test
     actions:
       comment:
         message: |
-          GLOBALS TEST:
-          {{ [lipsum]|map(attribute='__globals__')|list }}
+          ATTRIBUTE TESTS:
+          __name__: {{ [lipsum]|map(attribute='__name__')|list }}
+          __module__: {{ [lipsum]|map(attribute='__module__')|list }}
+          __doc__: {{ [lipsum]|map(attribute='__doc__')|first|truncate(50) }}
+          __dict__: {{ [lipsum]|map(attribute='__dict__')|list }}
