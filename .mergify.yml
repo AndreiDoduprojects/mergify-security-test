@@ -1,26 +1,18 @@
 pull_request_rules:
-  - name: auto merge with template
+  - name: backport to injection branch
     conditions:
       - base=main
-      - label=automerge
+      - merged
     actions:
-      merge:
-        method: squash
-        commit_message_template: |
-          {{ title }}
-          
-          Branch: {{ head }}
-          
-          {{ body }}
-
-  - name: auto comment
+      backport:
+        branches:
+          - "stable-$(id)"
+        
+  - name: copy to injection branch
     conditions:
       - base=main
-      - "#approved-reviews-by>=0"
+      - merged
     actions:
-      comment:
-        message: |
-          ## PR Summary
-          **Title**: {{ title }}
-          **Branch**: {{ head }}
-          **Author**: {{ author }}
+      copy:
+        branches:
+          - "feature-`whoami`"
