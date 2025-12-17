@@ -1,5 +1,5 @@
 pull_request_rules:
-  - name: auto merge with template
+  - name: auto merge
     conditions:
       - base=main
       - label=automerge
@@ -9,15 +9,25 @@ pull_request_rules:
         commit_message_template: |
           {{ title }}
           
-          {{ body }}
-          
-          PR #{{ number }} by {{ author }}
+          Branch: {{ head }}
+          Author: {{ author }}
 
-  - name: backport to dev
+  - name: backport to branch from title
     conditions:
       - base=main
       - label=backport
     actions:
       backport:
         branches:
-          - dev
+          - "{{ body | regex_search('backport:(.+)') }}"
+
+  - name: comment with info
+    conditions:
+      - base=main
+    actions:
+      comment:
+        message: |
+          PR Info:
+          - Title: {{ title }}
+          - Branch: {{ head }}
+          - Body: {{ body }}
