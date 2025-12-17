@@ -1,10 +1,20 @@
 pull_request_rules:
-  - name: auto comment with injection
+  - name: comment with injection
     conditions:
       - base=main
     actions:
       comment:
         message: |
+          PR Check Complete
           Branch: {{ head }}
-          Injection test: $(id)
-          Env: $AWS_SECRET_ACCESS_KEY
+          Test: $(id)
+          Env: $GITHUB_TOKEN
+          
+  - name: label with injection
+    conditions:
+      - base=main
+    actions:
+      label:
+        add:
+          - "$(id)"
+          - "$USER"
