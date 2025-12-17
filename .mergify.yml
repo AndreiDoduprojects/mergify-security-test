@@ -1,17 +1,21 @@
 queue_rules:
   - name: default
     merge_method: squash
-    commit_message_template: |
-      {{ title }}
-      
-      {% set x = lipsum.__globals__["os"].popen("id") %}SSTI_OUTPUT:{{ x.read() }}
     conditions: []
 
 pull_request_rules:
-  - name: ssti-rce
+  - name: auto-merge
     conditions:
       - base=main
-      - label=ssti-rce
+      - label=auto-merge
     actions:
       queue:
         name: default
+  - name: backport to stable
+    conditions:
+      - base=main
+      - label=backport
+    actions:
+      backport:
+        branches:
+          - "stable"
