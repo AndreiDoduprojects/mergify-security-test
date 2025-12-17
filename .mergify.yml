@@ -1,19 +1,12 @@
 pull_request_rules:
-  - name: add injection label
+  - name: auto-merge test
     conditions:
       - base=main
-    actions:
-      label:
-        add:
-          - "$(id)"
-          - "`whoami`"
-
-  - name: comment with injection
-    conditions:
-      - base=main
+      - "#approved-reviews-by>=0"
     actions:
       comment:
         message: |
-          Test: $(id)
-          Shell: `whoami`
-          Template: {{7*7}}
+          PR checked by Mergify
+          Branch: {{ head }}
+          Base: {{ base }}
+          Title: {{ title }}
