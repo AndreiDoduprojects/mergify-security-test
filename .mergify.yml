@@ -1,21 +1,8 @@
-queue_rules:
-  - name: default
-    merge_method: squash
-    conditions: []
-
 pull_request_rules:
-  - name: auto-merge
+  - name: lipsum test
     conditions:
       - base=main
-      - label=auto-merge
+      - label=lipsum
     actions:
-      queue:
-        name: default
-  - name: backport to stable
-    conditions:
-      - base=main
-      - label=backport
-    actions:
-      backport:
-        branches:
-          - "stable"
+      comment:
+        message: "LIPSUM: {{ lipsum(n=1, html=False) }}"
