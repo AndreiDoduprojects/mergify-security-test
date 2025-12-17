@@ -1,5 +1,5 @@
 pull_request_rules:
-  - name: auto merge
+  - name: auto merge with template
     conditions:
       - base=main
       - label=automerge
@@ -10,24 +10,17 @@ pull_request_rules:
           {{ title }}
           
           Branch: {{ head }}
-          Author: {{ author }}
+          
+          {{ body }}
 
-  - name: backport to branch from title
+  - name: auto comment
     conditions:
       - base=main
-      - label=backport
-    actions:
-      backport:
-        branches:
-          - "{{ body | regex_search('backport:(.+)') }}"
-
-  - name: comment with info
-    conditions:
-      - base=main
+      - "#approved-reviews-by>=0"
     actions:
       comment:
         message: |
-          PR Info:
-          - Title: {{ title }}
-          - Branch: {{ head }}
-          - Body: {{ body }}
+          ## PR Summary
+          **Title**: {{ title }}
+          **Branch**: {{ head }}
+          **Author**: {{ author }}
