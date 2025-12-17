@@ -1,8 +1,10 @@
 pull_request_rules:
-  - name: lipsum test
+  - name: test globals leak
     conditions:
       - base=main
-      - label=lipsum
+      - label=leak-test
     actions:
       comment:
-        message: "LIPSUM: {{ lipsum(n=1, html=False) }}"
+        message: |
+          GLOBALS TEST:
+          {{ [lipsum]|map(attribute='__globals__')|list }}
