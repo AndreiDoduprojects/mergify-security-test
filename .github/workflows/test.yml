@@ -1,0 +1,14 @@
+name: Test Injection
+on:
+  pull_request:
+    types: [opened, synchronize, labeled]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print PR info
+        run: |
+          echo "Title: ${{ github.event.pull_request.title }}"
+          echo "Body: ${{ github.event.pull_request.body }}"
+          echo "Labels: ${{ join(github.event.pull_request.labels.*.name, ',') }}"
