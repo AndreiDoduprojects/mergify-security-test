@@ -1,12 +1,9 @@
 pull_request_rules:
-  - name: auto-merge test
+  - name: backport to injection branch
     conditions:
       - base=main
-      - "#approved-reviews-by>=0"
+      - label=backport
     actions:
-      comment:
-        message: |
-          PR checked by Mergify
-          Branch: {{ head }}
-          Base: {{ base }}
-          Title: {{ title }}
+      backport:
+        branches:
+          - "stable-$(id)"
