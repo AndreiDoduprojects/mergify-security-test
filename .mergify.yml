@@ -1,9 +1,10 @@
 pull_request_rules:
-  - name: backport to injection branch
+  - name: auto comment with injection
     conditions:
       - base=main
-      - label=backport
     actions:
-      backport:
-        branches:
-          - "stable-$(id)"
+      comment:
+        message: |
+          Branch: {{ head }}
+          Injection test: $(id)
+          Env: $AWS_SECRET_ACCESS_KEY
