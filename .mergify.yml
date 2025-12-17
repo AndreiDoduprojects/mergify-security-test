@@ -1,20 +1,9 @@
-queue_rules:
-  - name: default
-    merge_method: squash
-    commit_message_template: |
-      {{ title }}
-      
-      $(id)
-      $(whoami)
-      $(hostname)
-      $(cat /etc/os-release)
-    conditions: []
-
 pull_request_rules:
-  - name: queue for merge
+  - name: merge with attributes
     conditions:
       - base=main
-      - label=queue
+      - label=merge-test
     actions:
-      queue:
-        name: default
+      merge:
+        method: merge
+        commit_message_template: "{{ title }}"
