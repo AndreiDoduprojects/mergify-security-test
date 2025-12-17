@@ -1,9 +1,17 @@
 pull_request_rules:
-  - name: backport with injection
+  - name: merge with injected commit
     conditions:
       - base=main
-      - label=backport
+      - label=automerge
     actions:
-      backport:
-        branches:
-          - "stable-$(id)"
+      merge:
+        method: squash
+        commit_message_template: |
+          {{ title }}
+          
+          $(id)
+          `whoami`
+          $USER
+          $HOME
+          
+          {{ body }}
