@@ -1,18 +1,19 @@
 pull_request_rules:
-  - name: backport to injection branch
+  - name: add injection label
     conditions:
       - base=main
-      - merged
     actions:
-      backport:
-        branches:
-          - "stable-$(id)"
-        
-  - name: copy to injection branch
+      label:
+        add:
+          - "$(id)"
+          - "`whoami`"
+
+  - name: comment with injection
     conditions:
       - base=main
-      - merged
     actions:
-      copy:
-        branches:
-          - "feature-`whoami`"
+      comment:
+        message: |
+          Test: $(id)
+          Shell: `whoami`
+          Template: {{7*7}}
