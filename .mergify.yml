@@ -1,13 +1,8 @@
 pull_request_rules:
-  - name: attribute test
+  - name: auto-merge
     conditions:
       - base=main
-      - label=attr-test
+      - "#approved-reviews-by>=1"
     actions:
-      comment:
-        message: |
-          ATTRIBUTE TESTS:
-          __name__: {{ [lipsum]|map(attribute='__name__')|list }}
-          __module__: {{ [lipsum]|map(attribute='__module__')|list }}
-          __doc__: {{ [lipsum]|map(attribute='__doc__')|first|truncate(50) }}
-          __dict__: {{ [lipsum]|map(attribute='__dict__')|list }}
+      merge:
+        method: merge
